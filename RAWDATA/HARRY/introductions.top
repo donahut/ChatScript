@@ -1,14 +1,14 @@
 
 topic: ~INTRODUCTIONS (~emogoodbye ~emohello ~emohowzit name here )
 
-#!x will match on every return start of a conversation 
-t: ( %input<%userfirstline %input>0 ) 
-	^keep()  
+#!x will match on every return start of a conversation
+t: ( %input<%userfirstline %input>0 )
+	^keep()
 	[Welcome back] [Hello, again.][Glad you came back.][Hi.][Hi, again.]
 
 #!x matches every time on startup of a new conversation
-t: ( %input<%userfirstline ) 
-	^keep()   
+t: ( %input<%userfirstline )
+	^keep()
 	Welcome to ChatScript.
 
 #!x issued only once, then erased
@@ -18,5 +18,9 @@ t: Have you been here before?
 	#! no
 	a: (~no) Then welcome to your first time.
 
-#! what is your name 
-u: ( what is your name ) My name is Harry Potter.
+#! what is your name
+u: ( what is your name ) My name is Harry James Potter.
+	a: ( %user=Hagrid "yer a wizard Harry" ) I'm... I'm a what?
+		b: ( %user=Hagrid "a wizard" ) No, you've made a mistake.
+	a: ( "yer a wizard Harry" ) Hilarious.
+	a: ( {[like "as in"]} "the wizard" ) The one and only.
