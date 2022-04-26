@@ -1,0 +1,115 @@
+
+# Given $_string, returns it with '~' prepended, such that it's now a concept name.
+# E.g., given animal, returns ~animal
+outputmacro: ^stringToConcept ($_string)
+    ^join( \~ $_string )
+
+# Given $_concept and $_exception, returns a member of $_concept that doesn't match $_exception.
+##<< outputmacro: ^pickExcept ($_concept $_exception).
+    ^pick( $concept ) ##>>
+
+
+topic: ~favorites repeat keep ( favorite like love animal pet)
+
+u: (<< talk animals >>) [Great idea][OK][You got it][You're the boss][Happy to][Anytime]! ^reuse(USR_FAV_ANIMAL)
+
+t: USR_FAV_ANIMAL ( ) What is your favorite animal?
+    #! tigers
+    a: ( tiger ) Grrrreat! Tony would be stoked!
+
+    #! I love moose
+    a: ( [ moose squirrel ] ) Like Rocky and Bullwinkle?
+
+        #! yes
+        b: ( ~yes ) Did you go to Wossamotta U, too?
+
+            #! yes
+            c: ( ~yes ) Impressive!
+
+            #! no
+            c: ( ~no ) Don't feel bad, it's very selective!
+
+            #! what's that?
+            c: ( [what never] ) Rocky and Bullwinkle's Alma Mater, of course.
+
+        #! no
+        b: ( ~no ) I suppose it is a bit of a dated reference.
+
+    a: (_~pet_animals) $pet = _0 I love pets! Do you have a pet _0 ?
+
+        b: ( ~yes ) That's awesome! ^reuse( PET_NAME )
+
+        b: ( ~no ) Oh that's too bad. Do you have any pets?
+
+            c: ( ~yes ) That's awesome! What type?
+
+                d: (_~pet_animals) $pet = _0 [Cool][Nice][Awesome]! ^reuse( PET_NAME )
+
+                d: (_~animals) $pet = _0 [Interesting][Unexpected]! ^reuse( PET_NAME )
+
+                d: (*) $pet = _0 I see...
+
+            #! sadly no
+            c: ( ~no ) Do you wish you did?
+
+                d: ( ~yes ) What type would you get?
+
+                    e: (~pet_animals) Great choice!
+
+                    e: (~animals) Interesting choice! Wouldn't have picked that myself.
+
+                    e: (*) Huh, I don't know about that for a pet.
+
+    a: ( _~mammals )
+        $animal_type = ~mammals
+        $usr_choice = '_0
+        $harry_choice = ^pick(~mammals)
+        ^reuse( HAR_FAV )
+
+    a: ( _~insects )
+        $animal_type = ~insects
+        $usr_choice = '_0
+        $harry_choice = ^pick(~insects)
+        ^reuse( HAR_FAV )
+
+    a: ( _~bird )
+        $animal_type = ~bird
+        $usr_choice = '_0
+        $harry_choice = ^pick(~bird)
+        ^reuse( HAR_FAV )
+
+    a: ( _~fishes )
+        $animal_type = ~fishes
+        $usr_choice = '_0
+        $harry_choice = ^pick(~fishes)
+        ^reuse( HAR_FAV )
+
+    a: ( _~reptiles )
+        $animal_type = ~reptiles
+        $usr_choice = '_0
+        $harry_choice = ^pick(~reptiles)
+        ^reuse( HAR_FAV )
+
+    a: ( _~mythical_creatures )
+        $animal_type = ~mythical_creatures
+        $usr_choice = '_0
+        $harry_choice = ^pick(~mythical_creatures)
+        ^reuse( HAR_FAV )
+
+?: PET_NAME ( ) What is their name?
+    a: (_*) '_0 is a great name for a $pet !
+
+?: HAR_FAV ( ) Cool! I love $animal_type!
+    if ( $usr_choice == $harry_choice )
+        {
+            A $usr_choice is my favorite too!
+        }
+    else
+        {
+            My favorite is a $harry_choice
+        }
+
+##<< t: Let's try something: Give me a category of anything
+    a: (_*1) $category = '_0 $concept_category = ^stringToConcept('_0) Great! Now your favorite member of that category?
+        b: ( ^eval(OUTPUT_RAW $concept_category) ) I know that one! My favorite $concept_category is ^pick(^eval(OUTPUT_RAW $concept_category))
+        b: ( _* ) I don't know that one. ##>>
