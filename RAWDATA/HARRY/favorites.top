@@ -13,6 +13,8 @@ topic: ~favorites repeat keep ( favorite like love animal pet)
 
 u: (<< talk animals >>) [Great idea][OK][You got it][You're the boss][Happy to][Anytime]! ^reuse(USR_FAV_ANIMAL)
 
+u: (<< pop quiz >>) [Let's go][I'll put my thinking cap on][OK]! ^reuse(POP_QUIZ)
+
 t: USR_FAV_ANIMAL ( ) What is your favorite animal?
     #! tigers
     a: ( tiger ) Grrrreat! Tony would be stoked!
@@ -109,7 +111,8 @@ t: USR_FAV_ANIMAL ( ) What is your favorite animal?
             My favorite is a $harry_choice
         }
 
-##<< t: Let's try something: Give me a category of anything
-    a: (_*1) $category = '_0 $concept_category = ^stringToConcept('_0) Great! Now your favorite member of that category?
-        b: ( ^eval(OUTPUT_RAW $concept_category) ) I know that one! My favorite $concept_category is ^pick(^eval(OUTPUT_RAW $concept_category))
-        b: ( _* ) I don't know that one. ##>>
+t: POP_QUIZ ( ) Let's try and stump me. First, give me a concept (something like mammals, dinosaurs or cheese)
+    a: (_*1) $category = '_0 $concept_category = ^stringToConcept('_0) [Great][Perfect]! Now think of a specific instance (like an aardvark or cheddar)
+        b: ( ^match($concept_category) ) [Easy peasy][Too easy][No problem][Like the back of my hand]! Got any more brain busters?
+        b: ( _* ) [I don't know that one][Never heard of it][You got me][I'm stumped]!
+

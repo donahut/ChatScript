@@ -1,6 +1,6 @@
 # Moxie
 
-**Author:** Tom Donahue
+**Author:** Tom Donahue  
 **Date:** 4/16/22
 
 
@@ -32,7 +32,6 @@
     - **Note:** Keep the `w=1` flag tripped in that URL, there were a number of whitespace clean-up changes made by my editor that make it harder to see the substantive additions without
     - **Note:** Each commit is labeled with which Question it is tackling, in case you want to isolate them
 ---
-## Assignments
 
 ## Question 1:
 - My initial experiementation is limited solely to `introductions.top`
@@ -55,12 +54,11 @@
 outputmacro: ^stringToConcept ($_string)
     ^join( \~ $_string )
 ```
-- From my debugging sessions, I know that it at least creates the concept-esque string `animals` => `~animals` because I stored the result in a $variable and checked the contents of it via `:variables`
-- However, validating my approach brings us to the **Bonus**
-    - Despite extended tweaks, I’ve yet to be able to utilize this as a concept in a topic. My best guess is that it doesn't work because:
-      - (a) Converting a `string` to a `concept` is not equivalent to appending a `~` character to the concept name string, which would mean my entire approach here was invalid.
-      - (b) My approach to appending the `~` is valid, however, to utilize it as a concept, there is some problem with encoding, implicit evaluation happening by ChatScript, or there's some set of functions as yet undiscovered by me to make it operate as a concept in a topic.
-    - If you're interested at my attempts to use it, it's commented out at the bottom of `favorites.top`
+- From my debugging sessions, I know that it at least creates the concept-esque string `animals` => `~animals` because I stored the result in a $variable and checked the contents of it via `:variables`, however it doesn't appear to fully work like a concept.
+- **Bonus**
+    - I have a partially working solution here utilizing `^match()` on a `$variable` that stores the conceptified string.
+    - One aspect that doesn't work is calling `^pick()` on the `$variable`, which doesn't yield a member of the concept (the way calling it on a `~concept` does).
+    - My usage can be found at the bottom of `favorites.top` where I use it in a silly little game (that doesn't really make sense with the rest of the topic).
 
 ## Question 4:
 - Added `favorites.top` that contains an extended conversation around favorite animals and tangents into pets.
@@ -74,3 +72,13 @@ outputmacro: ^stringToConcept ($_string)
 	- In the past, during my time at Aldebaran, we always had topic files like this one where we stored various sets of useful concepts to be re-used across topics, rather than defining them where we were using them (unless they had very limited scope), which is why I took that approach here.
 - Added `DONTKNOW` `patternmacro` in `childhood.top`
 	- I had a some trouble with using this as a rule in the topic. From my debugging, it seemed to clash with built in Quibbles (which have similar names and matching criteria). As a workaround, I disabled the Quibbles for now. I’m sure there’s a better way to handle such clashes, but I wanted to focus on my additions separately for this exercise given the time constraints.
+---
+
+## Question 6:
+- I didn't get the chance to implement my approach here, so I'll describe it here:
+  1. Rely on the existing `^pick()` functionality
+  2. Utilize a loop construct in the macro
+     1. Given a concept, pick a random result from it
+     2. If the result matches the `$_exception`, pick again
+     3. If the result doesn't match the `$_exception`, return the pick
+- This isn't a particularly good solution (e.g. what happens in the edge case where the concept only has 1, it would loop forever), but it was going to be my initial attempt. Furthermore, since it relies on `^pick` it almost surely doesn't pass the optional Bonus criteria.
