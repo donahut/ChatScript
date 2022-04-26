@@ -12,7 +12,7 @@ larva [bee insect]
 [chick hatchling] chicken
 piglet [boar pig]
 caterpillar butterfly
-fawn deer 
+fawn deer
 colt [donkey horse]
 foal [donkey horse]
 duckling duck
@@ -27,7 +27,7 @@ cub [tiger leopard lion]
 bunny rabbit
 lamb sheep
 larva termite
-tadpole toad
+tadpole [toad frog]
 larva wasp
 
 table: ~lcthings1 (^relation ^animal ^unit)
@@ -109,7 +109,7 @@ rabbit hutch
 chicken coop
 ~fishes [aquarium fish_tank ]
 [snake lizard turtle] terrarium
-[snake lizard turtle] vivarium 
+[snake lizard turtle] vivarium
 sea_horse aquarium
 dog [doghouse kennel]
 ~dog_breeds [dog-house doghouse kennel]
